@@ -47,53 +47,73 @@ const HW15 = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
 
-    const sendQuery = (params: any) => {
+    const sendQuery = (params: ParamsType) => {
         setLoading(true)
+
         getTechs(params)
             .then((res) => {
-                if(res) {
+                if (res) {
                     setTechs(res.data.techs)
                     setTotalCount(res.data.totalCount)
                 }
-                // сохранить пришедшие данные
-
-                //
+            })
+            .finally(() => {
+                setLoading(false)
             })
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
-        // делает студент
-
         setPage(newPage)
-         setCount(newCount)
+        setCount(newCount)
 
-         sendQuery({page:newPage,count:newCount})
+        sendQuery({
+            page: newPage,
+            count: newCount,
+            sort,
+        })
+
         searchParams.set('page', String(newPage))
-        searchParams.set('count', String (newCount))
-        setSearchParams(searchParams)
+        searchParams.set('count', String(newCount))
+        searchParams.set('sort', sort)
 
+        setSearchParams(searchParams)
     }
 
     const onChangeSort = (newSort: string) => {
-        // делает студент
-
         setSort(newSort)
-        setPage(1) // при сортировке сбрасывать на 1 страницу
+        setPage(1)
 
-        sendQuery({page:1, sort:newSort})
-        searchParams.set("page","1"  )
-        searchParams.set("sort",newSort  )
+        sendQuery({
+            page: 1,
+            count,
+            sort: newSort,
+        })
+
+        searchParams.set('page', '1')
+        searchParams.set('count', String(count))
+        searchParams.set('sort', newSort)
+
         setSearchParams(searchParams)
-
     }
 
 
 
     useEffect(() => {
         const params = Object.fromEntries(searchParams)
-        sendQuery({page: params.page, count: params.count})
-        setPage(+params.page || 1)
-        setCount(+params.count || 4)
+
+        const currentPage = +params.page || 1
+        const currentCount = +params.count || 4
+        const currentSort = params.sort || ''
+
+        setPage(currentPage)
+        setCount(currentCount)
+        setSort(currentSort)
+
+        sendQuery({
+            page: currentPage,
+            count: currentCount,
+            sort: currentSort,
+        })
     }, [])
 
     const mappedTechs = techs.map(t => (
