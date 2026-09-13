@@ -1,27 +1,39 @@
 .tech {
-    width: 50vw;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .developer {
-
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .techHeader {
-    width: 50vw;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .developerHeader {
-
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .row {
     display: flex;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .rowHeader {
     display: flex;
+    width: 100%;
+    background-color: #e5e5e5;
 }
 
 .loading {
-
+    margin-bottom: 10px;
 }
