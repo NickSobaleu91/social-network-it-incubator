@@ -74,7 +74,6 @@ const HW15 = () => {
 
         searchParams.set('page', String(newPage))
         searchParams.set('count', String(newCount))
-        searchParams.set('sort', sort)
 
         setSearchParams(searchParams)
     }
